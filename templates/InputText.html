@@ -1,0 +1,222 @@
+<html>
+   <head>
+      <meta charset="utf8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      
+    <title>預測結果 Price</title>
+    <link rel="icon" type="image/x-icon" href="../../../img/car.png">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
+<body>    
+<form action="/pt">
+  <div class="content">
+      <div class="main">
+            <div>
+              <li> {{[mx]}} </li>
+                <h1 >然後，你的夢想二手車需要多少錢</h1>
+                <p>輸入數值找出想要的車款</p>
+            </div>
+            <div class="text">
+                <p>請輸入你理想的車子資料：  </p>
+            </div>
+      
+      <div>
+         <div class="input">
+            <table>
+                <input id="height" type="number" name="num1" min="10" placeholder="市區油耗(Km/ltr)" pattern="\*d" inputmode="numeric" onkeyup="if(value<0) value=0;">
+                <input id="length" type="number" name="num2" min="10"  placeholder="高速公路油耗(Km/ltr)" pattern="\*d" inputmode="numeric">
+                <input id="power" type="number" name="num3" min="100"  placeholder="馬力(HP)" pattern="\*d" inputmode="numeric">
+                  
+                <!-- <tr>
+                    <td align="right">市區油耗:</td>
+                    <td><input type="text" name="num1"><br/>
+                </tr>
+                <tr>
+                    <td align="right">高速公路油耗:</td>
+                    <td><input type="text" name="num2"><br/>
+                </tr>
+                <tr>
+                    <td align="right">馬力:</td>
+                    <td><input type="text" name="num3"><br/>
+                </tr> -->
+                <!-- <button class="clear" onclick="clearAll()">清空</button> -->
+                <button class="submit" >算出你的夢想車車預算</button>
+            </table>
+ </div>
+   <!-- <input type="submit" value="提交"> -->
+</form>
+
+  {% block body %}
+  {% endblock %}
+</body>
+</html>
+
+
+<script>
+   $(function () {
+       $("input").keydown(function () {
+           // Save old value.
+           if (!$(this).val() || (parseInt($(this).val()) < 1000 && parseInt($(this).val()) >= 0))
+           $(this).data("old", $(this).val());
+       });
+       $("input").keyup(function () {
+           // Check correct, else revert back to old value.
+           if (!$(this).val() || (parseInt($(this).val()) < 1000 && parseInt($(this).val()) >= 0))
+           ;
+           else
+           $(this).val($(this).data("old"));
+       });
+   });
+   function clearAll() {
+       document.getElementById("height").value = ''
+       document.getElementById("length").value = ''
+       document.getElementById("power").value = ''
+       document.getElementById("width").value = ''
+       document.getElementById("result").innerHTML = ''
+       document.getElementById("resultImage").innerHTML = '';
+   }
+</script>
+
+<style>
+body, form {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 50%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+input, input:focus{
+  border-width: 0px;
+  outline:0;
+  -webkit-appearance:none;
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+}
+li {color:transparent;}
+h1,p {
+  color: beige;
+}
+p {
+  font-size: 14px;  
+}
+input {
+  padding:0.4rem 0.7rem;
+  margin: 0.3rem;
+  border-radius: 2px;
+  width: 15%;
+}
+button {
+  outline: 0;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 3px;
+  font-weight: 600;
+  cursor: pointer;
+}
+button:last-child {
+  margin-left: 1rem;
+}
+button:hover {
+  box-shadow: 0.05rem 0.05rem 0.05rem 0.05rem rgba(88, 94, 78, 0.3) ;
+}
+.main {
+  height: 100%;
+  padding: 5% 12% 12% 12%;
+  background: rgb(2,0,36);
+  background: linear-gradient(130deg, rgba(2,0,36,1) 0%, rgba(95,224,251,1) 59%, rgba(61,93,170,1) 100%);
+  
+}
+
+.input {
+  margin-top: 2rem;
+  padding: 3%;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  
+}
+.submit {
+  background-color: rgb(142, 239, 14);
+  color: white;
+  margin-left: 0.5rem;
+}
+.clear {
+  background-color: rgb(88, 94, 78);
+  color: white;
+}
+.result {
+  height: 100%;
+  background: rgb(206, 173, 231);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+#result {
+  font-size: 3rem;
+  color: white;
+  font-weight: bolder;
+  letter-spacing: 2px;
+}
+#resultImage {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#resultImage img{
+  width: 70%;
+  border-radius: 10px;
+}
+
+ 
+/* @media screen and (max-width:976px) {
+  input {
+     width: 90%;
+  }
+  button {
+     margin-top: 1rem;
+  }
+  button:last-child {
+     margin-left: 0;
+     margin-top: 1rem;
+  }
+  .input {
+     flex-direction: column;
+  }
+  .main {
+     text-align: center;
+  }
+} */
+ 
+
+</style>

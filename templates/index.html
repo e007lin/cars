@@ -1,0 +1,698 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+
+<head>
+  <title>美國二手車售價與車型預測</title>
+  <link rel="icon" type="image/x-icon" href="static/image/car.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+  <style>
+    .chartdiv {
+      width: 95%;
+      min-height: 500px;
+      margin: 1rem auto;
+      background-color: white;
+    }   
+       
+  </style>
+
+  <!-- Resources -->
+  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+</head>
+
+<body id="myPage">
+
+  <!-- Sidebar on click -->
+  <nav class="w3-sidebar w3-bar-block w3-white w3-card w3-animate-left w3-xxlarge" style="display:none;z-index:2"
+    id="mySidebar">
+    <a href="javascript:void(0)" onclick="w3_close()"
+      class="w3-bar-item w3-button w3-display-topright w3-text-teal">Close
+      <i class="fa fa-remove"></i>
+    </a>
+    <a href="#" class="w3-bar-item w3-button">Link 1</a>
+    <a href="#" class="w3-bar-item w3-button">Link 2</a>
+    <a href="#" class="w3-bar-item w3-button">Link 3</a>
+    <a href="#" class="w3-bar-item w3-button">Link 4</a>
+    <a href="#" class="w3-bar-item w3-button">Link 5</a>
+  </nav>
+
+  <!-- Navbar -->
+  <div class="w3-top">
+    <div class="w3-bar w3-theme-d2 w3-left-align">
+      <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-hover-white w3-theme-d2"
+        href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+      <a href="#" class="w3-bar-item w3-button w3-teal"><i class="fa fa-car w3-margin-right"></i>首頁</a>
+      <a href="#foreword" class="w3-bar-item w3-button w3-hide-small w3-hover-white">前言</a>
+      <a href="#work" class="w3-bar-item w3-button w3-hide-small w3-hover-white">資料處理</a>
+      <a href="#team" class="w3-bar-item w3-button w3-hide-small w3-hover-white">關於我們</a>
+      <a href="static/view/car_type.html" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-hover-white">預測結果一</a>      
+     <!--<a href="http://127.0.0.1:5000/InputText.html" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-hover-white">預測結果二</a>
+      -->
+      <form action="/pt" >
+         <input type="submit" value="預測結果二" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-hover-white"/>
+      </form>
+    </div>
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium">
+    <a href="#foreword" class="w3-bar-item w3-button">前言</a>
+    <a href="#work" class="w3-bar-item w3-button">資料處理</a>
+    <a href="#team" class="w3-bar-item w3-button">關於我們</a>
+    <a href="static/view/car_type.html" target="_blank" class="w3-bar-item w3-button">預測結果一</a>
+    <!--<a href="http://127.0.0.1:5000/InputText.html" target="_blank" class="w3-bar-item w3-button">預測結果二</a>
+      -->
+    <form action="/ipt" >
+        <input type="submit" value="預測結果二" target="_blank" class="w3-bar-item w3-button"/>
+    </form>
+  </div>
+  </div>
+
+  <!-- Image Header -->
+  <div class="w3-display-container w3-animate-opacity">
+    <img src="static/image/benner.jpeg" alt="boat" style="width:100%;min-height:350px;max-height:600px;object-fit: cover;">
+    <!-- <div class="w3-container w3-display-bottomleft w3-margin-bottom">  
+    <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-xlarge w3-theme w3-hover-teal" title="Go To W3.CSS">LEARN W3.CSS</button>
+  </div> -->
+  </div>
+
+  <!-- Modal -->
+  <div id="id01" class="w3-modal">
+    <div class="w3-modal-content w3-card-4 w3-animate-top">
+      <header class="w3-container w3-teal w3-display-container">
+        <span onclick="document.getElementById('id01').style.display='none'"
+          class="w3-button w3-teal w3-display-topright"><i class="fa fa-remove"></i></span>
+        <h4>Oh snap! We just showed you a modal..</h4>
+        <h5>Because we can <i class="fa fa-smile-o"></i></h5>
+      </header>
+      <div class="w3-container">
+        <p>Cool huh? Ok, enough teasing around..</p>
+        <p>Go to our <a class="w3-text-teal" href="/w3css/default.asp">W3.CSS Tutorial</a> to learn more!</p>
+      </div>
+      <footer class="w3-container w3-teal">
+        <p>Modal footer</p>
+      </footer>
+    </div>
+  </div>
+
+  <!-- foreword Row -->
+  <div class="w3-row-padding w3-center w3-padding-64" id="foreword">
+    <h2>前言</h2>
+    <div class="foreword__inner">
+      <p>產品價格預測和選型是消費品市場最搶手的項目。它們不僅可供潛在客戶參考，並協助製造商或經銷商利用這些信息來製定營銷和銷售策略。</p>
+      <p>本專題以近兩年市場價格波動幅度劇烈及需求急升的美國地區二手車為例，分析數據並製作預測模型，以快速因應市場變動並提供決策單位重要參考依據。</p>
+    </div>
+
+    <!-- Work Row -->
+    <div class="w3-row-padding w3-padding-64 w3-theme-l1" id="work">
+      <h2>資料前處理</h2>
+      <p style="font-size:3rem">3,000,000 -> 200,000 -> 131,371</p>
+      <p>1.Kaggle網路上取二手車資料300萬筆，透過linux取最近5年的資料，每年（分層隨機）再取4萬筆，共20萬筆資料。</p>
+      <p>2. 採「刪除法」來處理空值，由20萬筆資料降為13萬筆資料。</p>
+      <hr>
+      <h2>資料處理</h2>
+      <p>初步資料觀察</p>
+      <img src="image/sourceCode/01.png" alt="">
+      <h3>1. 資料整併</h3>
+      <div class="work--image">
+        <img src="image/sourceCode/02.png" alt="" class="sixtyFive">
+        <img src="image/sourceCode/03.png" alt="" class="sixtyFive">
+      </div>
+      <div id="chartdiv_1" class="chartdiv"></div>
+      <div id="chartdiv_2" class="chartdiv"></div>
+      <h3>2. 資料平衡化</h3>
+      <p></p>
+      <div class="work--flexImage">
+        <div class="work--flexImage--item">
+          <img src="image/sourceCode/04.png" alt="" class="sixtyFive">
+          <p> y類別的不平衡處理，刪除離群值</p>
+        </div>
+        <div class="work--flexImage--item">
+          <img src="image/sourceCode/05.png" alt="" class="sixtyFive">
+          <p> x類別的不平衡處理，刪除離群值</p>
+        </div>
+      </div>
+      
+      <div class="work--image">
+        <img src="image/sourceCode/06.png" alt="" class="sixtyFive">
+      </div>
+      <p> 觀察資料是否有偏態的問題，將偏度大於1的數值資料，做對數轉換處理</p>
+      <div class="work--image">
+        <img src="image/sourceCode/07.png" alt="" class="fourty">
+      </div>
+      <p> 利用盒狀圖找出離群值</p>
+
+      <h3>3. 標準化編碼</h3>
+      <div class="work--image">
+        <img src="image/sourceCode/08.png" alt="" class="fourty">
+      </div>
+      <p> Label Encoding</p>
+      <div class="work--image">
+        <img src="image/sourceCode/09.png" alt="" class="sixtyFive">
+      </div>
+      <p> Onehot Encoding</p>
+      <div class="work--image">
+        <img src="image/sourceCode/10.png" alt="" class="sixtyFive">
+      </div>
+      <p> 標準化分布(0.2~0.8)</p>
+    </div>
+
+
+    <!-- Team Container -->
+    <div class="w3-container w3-padding-64 w3-center" id="team">
+      <h2>工作成員</h2>
+      <p>在專題裡做了什麼</p>
+
+      <div class="w3-row"><br>
+
+        <div class="w3-quarter team__container--item">
+          <img src="static/image/林浩賓01.jpg" style="width:45%" class="w3-circle w3-hover-opacity">
+          <h3>林浩賓</h3>
+          <p>Technical PM</p>
+          <p>專案組織管理、技術支援及問題瓶頸解決、團隊溝通協調
+          </p>
+          <p>
+            職稱：專案副理</p>
+          <p>Python、SQL,VBA、
+            ISO 9001、ISO 14001管理代表、
+            投資分析、財報分析、產業競爭分析</p>
+            <p>e007lin@gmail.com</p>
+        </div>
+        <div class="w3-quarter team__container--item">
+          <img src="static/image/王孝卿.JPG" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
+          <h3>王孝卿</h3>
+          <p>Project Coordinator</p>
+          <p>BI開發及驗證測試</p>
+          <p>職稱：專案經理
+            、業務行銷</p>
+          <p>專案管理、風險管控、
+            業務推廣、行銷策略、
+            Python、SQL</p>
+            <p>sylvia.wang.xyz@gmail.com</p>
+        </div>
+        <div class="w3-quarter team__container--item">
+          <img src="static/image/張靜文01.jpg" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
+          <h3>張靜文</h3>
+          <p>DBA</p>
+          <p>資料蒐集及維護</p>
+          <p>職稱：工業工程師</p>
+          <p>產能優化、
+            人力工時規劃、
+            資料庫維護</p>
+            <p>
+              iiwo0420@gmail.com
+            </p>
+        </div>
+        <div class="w3-quarter team__container--item">
+          <img src="static/image/張馨文.jpg" style="width:45%" class="w3-circle w3-hover-opacity">
+          <h3>張馨文</h3>
+          <p>Team 1(產品預測)_Engineer</p>
+          <p>演算法(Hybrid)開發應用
+            資料清洗及分析</p>
+          <p>職稱：主任工程師
+            資深工程師</p>
+          <p>專案管理、跨部門溝通、
+            COF tape design、先進封裝後段製程包材(carrier tape)評估驗證
+            、AutoCAD、Python</p>
+            <p>
+              remoteocean0212@gmail.com
+            </p>
+        </div>
+        <div class="w3-quarter team__container--item">
+          <img src="static/image/鍾遠東.png" style="width:45%" class="w3-circle w3-hover-opacity">
+          <h3>鍾遠東</h3>
+          <p>Technical Consultant</p>
+          <p>技術分析研究及流程優化</p>
+          <p>職稱：technical director
+            技術總監</p>
+          <p>Flat-panel display、
+            X-ray tomography、
+            Python、VBA</p>
+            <p>sausalitojong@gmail.com</p>
+        </div>
+        <div class="w3-quarter team__container--item">
+          <img src="static/image/林卉蓁.jpg" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
+          <h3>林卉蓁</h3>
+          <p>Team 1(產品預測)_Engineer</p>
+          <p>演算法(Hybrid)開發應用
+            資料清洗及分析</p>
+          <p>職稱：軟體工程師</p>
+          <p>資訊系統開發、
+            Java、c#、ms sql、spring、javascript、jquery
+            python、mysql</p>
+            <p>linzhen17316@gmail.com</p>
+        </div>
+        <div class="w3-quarter team__container--item">
+          <img src="static/image/劉悉達.jpg" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
+          <h3>劉悉達</h3>
+          <p>Frontend Engineer</p>
+          <p>網站架構設計及UI布局</p>
+          <p>職稱：都市規劃師
+            行銷企劃組長</p>
+          <p>土地規劃、都市計畫法規
+            獨立網站經營規劃、
+            AutoCAD、HTML、CSS、Python</p>
+            <p>sexyheadlock@gmail.com</p>
+        </div>
+        <div class="w3-quarter team__container--item">
+          <img src="static/image/張晉豪.jpg" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
+          <h3>張晉豪</h3>
+          <p>Team 2(價格預測)_Engineer</p>
+          <p>演算法(Hybrid)開發應用
+            資料清洗及分析</p>
+          <p>職稱：設備助理工程師</p>
+          <p>python、mysql、LINUX、hadoop</p>
+          <p>ZXCV8119@gmail.com</p>
+        </div>
+
+      </div>
+    </div>
+
+
+
+    <!-- Image of location/map -->
+    <!-- <img src="/w3images/map.jpg" class="w3-image w3-greyscale-min" style="width:100%;"> -->
+
+    <!-- Footer -->
+    <footer class="w3-container w3-padding-32 w3-theme-d1 w3-center">
+      <h4 class="w3-teal">課程相關資訊</h4>
+      <p>指導老師｜黃登揚、蔡智勇</p>
+      <p>課程名稱｜Python人工智慧與資料科學人才養成班第01期</p>
+      <p>上課期間｜2022/5/20 - 2022/7/15</p>
+
+      <div style="position:relative;bottom:100px;z-index:1;" class="w3-tooltip w3-right">
+        <span class="w3-text w3-padding w3-teal w3-hide-small">Go To Top</span>
+        <a class="w3-button w3-theme" href="#myPage"><span class="w3-xlarge">
+            <i class="fa fa-chevron-circle-up"></i></span></a>
+      </div>
+    </footer>
+
+    <script>
+      // Script for side navigation
+      function w3_open() {
+        var x = document.getElementById("mySidebar");
+        x.style.width = "300px";
+        x.style.paddingTop = "10%";
+        x.style.display = "block";
+      }
+
+      // Close side navigation
+      function w3_close() {
+        document.getElementById("mySidebar").style.display = "none";
+      }
+
+      // Used to toggle the menu on smaller screens when clicking on the menu button
+      function openNav() {
+        var x = document.getElementById("navDemo");
+        if (x.className.indexOf("w3-show") == -1) {
+          x.className += " w3-show";
+        } else {
+          x.className = x.className.replace(" w3-show", "");
+        }
+      }
+
+
+    </script>
+
+
+    <script>
+      am4core.useTheme(am4themes_animated);
+      // Themes end
+
+      // Chart1 code
+      // create chart
+      var chart1 = am4core.create("chartdiv_1", am4charts.TreeMap);
+      chart1.hiddenState.properties.opacity = 0;
+
+      chart1.data = [{
+        name: "Euro",
+        children: [
+          {
+            name: "EU Sedan",
+            value: 7135
+          },
+          {
+            name: "EU SUV/ Crossover",
+            value: 17180
+          },
+          {
+            name: "EU Pickup Truck",
+            value: 4918
+          }
+        ]
+      },
+      {
+        name: "USA",
+        children: [
+          {
+            name: "USA Sedan",
+            value: 8620
+          },
+          {
+            name: "USA SUV/ Crossover",
+            value: 25986
+          },
+          {
+            name: "USA Pickup Truck",
+            value: 11405
+          }
+        ]
+      },
+      {
+        name: "Asia",
+        children: [
+          {
+            name: "Asia Sedan",
+            value: 20001
+          },
+          {
+            name: "Asia SUV/ Crossover",
+            value: 33027
+          },
+          {
+            name: "Asia Pickup Truck",
+            value: 3099
+          }
+        ]
+
+      }];
+
+      chart1.colors.step = 2;
+
+      // define data fields
+      chart1.dataFields.value = "value";
+      chart1.dataFields.name = "name";
+      chart1.dataFields.children = "children";
+      chart1.layoutAlgorithm = chart1.binaryTree;
+
+      chart1.zoomable = false;
+
+      // level 0 series template
+      var level0SeriesTemplate = chart1.seriesTemplates.create("0");
+      var level0ColumnTemplate = level0SeriesTemplate.columns.template;
+
+      level0ColumnTemplate.column.cornerRadius(10, 10, 10, 10);
+      level0ColumnTemplate.fillOpacity = 0;
+      level0ColumnTemplate.strokeWidth = 4;
+      level0ColumnTemplate.strokeOpacity = 0;
+
+      // level 1 series template
+      var level1SeriesTemplate = chart1.seriesTemplates.create("1");
+      level1SeriesTemplate.tooltip.dy = - 15;
+      level1SeriesTemplate.tooltip.pointerOrientation = "vertical";
+
+      var level1ColumnTemplate = level1SeriesTemplate.columns.template;
+
+      level1SeriesTemplate.tooltip.animationDuration = 0;
+      level1SeriesTemplate.strokeOpacity = 1;
+
+      level1ColumnTemplate.column.cornerRadius(10, 10, 10, 10)
+      level1ColumnTemplate.fillOpacity = 1;
+      level1ColumnTemplate.strokeWidth = 4;
+      level1ColumnTemplate.stroke = am4core.color("#ffffff");
+
+      var bullet1 = level1SeriesTemplate.bullets.push(new am4charts.LabelBullet());
+      bullet1.locationY = 0.5;
+      bullet1.locationX = 0.5;
+      bullet1.label.text = "{name}";
+      bullet1.label.fill = am4core.color("#ffffff");
+      bullet1.interactionsEnabled = false;
+      chart1.maxLevels = 2;
+
+
+      setInterval(function () {
+        for (var i = 0; i < chart1.dataItems.length; i++) {
+          var dataItem = chart1.dataItems.getIndex(i);
+          for (var c = 0; c < dataItem.children.length; c++) {
+            var child = dataItem.children.getIndex(c);
+            child.value = child.value + Math.round(child.value * Math.random() * 0.4 - 0.2);
+          }
+        }
+      }, 2000)
+
+      // chart_2 code
+
+      var chart2 = am4core.create("chartdiv_2", am4charts.XYChart);
+
+      // some extra padding for range labels
+      chart2.paddingBottom = 50;
+
+      chart2.cursor = new am4charts.XYCursor();
+      chart2.scrollbarX = new am4core.Scrollbar();
+
+      // will use this to store colors of the same items
+      var colors = {};
+
+      var categoryAxis = chart2.xAxes.push(new am4charts.CategoryAxis());
+      categoryAxis.dataFields.category = "category";
+      categoryAxis.renderer.minGridDistance = 60;
+      categoryAxis.renderer.grid.template.location = 0;
+      categoryAxis.dataItems.template.text = "{realName}";
+      categoryAxis.adapter.add("tooltipText", function (tooltipText, target) {
+        return categoryAxis.tooltipDataItem.dataContext.realName;
+      })
+
+      var valueAxis = chart2.yAxes.push(new am4charts.ValueAxis());
+      valueAxis.tooltip.disabled = true;
+      valueAxis.min = 0;
+
+      // single column series for all data
+      var columnSeries = chart2.series.push(new am4charts.ColumnSeries());
+      columnSeries.columns.template.width = am4core.percent(80);
+      columnSeries.tooltipText = "{provider}: {realName}, {valueY}";
+      columnSeries.dataFields.categoryX = "category";
+      columnSeries.dataFields.valueY = "value";
+
+      // second value axis for quantity
+      var valueAxis2 = chart2.yAxes.push(new am4charts.ValueAxis());
+      valueAxis2.renderer.opposite = true;
+      valueAxis2.syncWithAxis = valueAxis;
+      valueAxis2.tooltip.disabled = true;
+
+      // quantity line series
+      var lineSeries = chart2.series.push(new am4charts.LineSeries());
+      lineSeries.tooltipText = "{valueY}";
+      lineSeries.dataFields.categoryX = "category";
+      lineSeries.dataFields.valueY = "quantity";
+      lineSeries.yAxis = valueAxis2;
+      lineSeries.bullets.push(new am4charts.CircleBullet());
+      lineSeries.stroke = chart2.colors.getIndex(13);
+      lineSeries.fill = lineSeries.stroke;
+      lineSeries.strokeWidth = 2;
+      lineSeries.snapTooltip = true;
+
+      // when data validated, adjust location of data item based on count
+      lineSeries.events.on("datavalidated", function () {
+        lineSeries.dataItems.each(function (dataItem) {
+          // if count divides by two, location is 0 (on the grid)
+          if (dataItem.dataContext.count / 2 == Math.round(dataItem.dataContext.count / 2)) {
+            dataItem.setLocation("categoryX", 0);
+          }
+          // otherwise location is 0.5 (middle)
+          else {
+            dataItem.setLocation("categoryX", 0.5);
+          }
+        })
+      })
+
+      // fill adapter, here we save color value to colors object so that each time the item has the same name, the same color is used
+      columnSeries.columns.template.adapter.add("fill", function (fill, target) {
+        var name = target.dataItem.dataContext.realName;
+        if (!colors[name]) {
+          colors[name] = chart2.colors.next();
+        }
+        target.stroke = colors[name];
+        return colors[name];
+      })
+
+
+      var rangeTemplate = categoryAxis.axisRanges.template;
+      rangeTemplate.tick.disabled = false;
+      rangeTemplate.tick.location = 0;
+      rangeTemplate.tick.strokeOpacity = 0.6;
+      rangeTemplate.tick.length = 60;
+      rangeTemplate.grid.strokeOpacity = 0.5;
+      rangeTemplate.label.tooltip = new am4core.Tooltip();
+      rangeTemplate.label.tooltip.dy = -10;
+      rangeTemplate.label.cloneTooltip = false;
+
+      ///// DATA
+      var chartData = [];
+      var lineSeriesData = [];
+
+      var data =
+      {
+        "Year 2017": {
+          "Euro": 5233,
+          "USA": 7549,
+          "Asia": 9813,
+          "quantity": 22595
+        },
+        "Year 2018": {
+          "Euro": 2874,
+          "USA": 4353,
+          "Asia": 5594,
+          "quantity": 12821
+        },
+        "Year 2019": {
+          "Euro": 3668,
+          "USA": 6141,
+          "Asia": 7669,
+          "quantity": 17478
+        },
+        "Year 2020": {
+          "Euro": 16809,
+          "USA": 26274,
+          "Asia": 29089,
+          "quantity": 72172
+        },
+        "Year 2021": {
+          "Euro": 649,
+          "USA": 1694,
+          "Asia": 3962,
+          "quantity": 6305
+        }
+      }
+
+      // process data ant prepare it for the chart2
+      for (var providerName in data) {
+        var providerData = data[providerName];
+
+        // add data of one provider to temp array
+        var tempArray = [];
+        var count = 0;
+        // add items
+        for (var itemName in providerData) {
+          if (itemName != "quantity") {
+            count++;
+            // we generate unique category for each column (providerName + "_" + itemName) and store realName
+            tempArray.push({ category: providerName + "_" + itemName, realName: itemName, value: providerData[itemName], provider: providerName })
+          }
+        }
+        // sort temp array
+        tempArray.sort(function (a, b) {
+          if (a.value > b.value) {
+            return 1;
+          }
+          else if (a.value < b.value) {
+            return -1
+          }
+          else {
+            return 0;
+          }
+        })
+
+        // add quantity and count to middle data item (line series uses it)
+        var lineSeriesDataIndex = Math.floor(count / 2);
+        tempArray[lineSeriesDataIndex].quantity = providerData.quantity;
+        tempArray[lineSeriesDataIndex].count = count;
+        // push to the final data
+        am4core.array.each(tempArray, function (item) {
+          chartData.push(item);
+        })
+
+        // create range (the additional label at the bottom)
+        var range = categoryAxis.axisRanges.create();
+        range.category = tempArray[0].category;
+        range.endCategory = tempArray[tempArray.length - 1].category;
+        range.label.text = tempArray[0].provider;
+        range.label.dy = 30;
+        range.label.truncate = true;
+        range.label.fontWeight = "bold";
+        range.label.tooltipText = tempArray[0].provider;
+
+        range.label.adapter.add("maxWidth", function (maxWidth, target) {
+          var range = target.dataItem;
+          var startPosition = categoryAxis.categoryToPosition(range.category, 0);
+          var endPosition = categoryAxis.categoryToPosition(range.endCategory, 1);
+          var startX = categoryAxis.positionToCoordinate(startPosition);
+          var endX = categoryAxis.positionToCoordinate(endPosition);
+          return endX - startX;
+        })
+      }
+
+      chart2.data = chartData;
+
+
+      // last tick
+      var range = categoryAxis.axisRanges.create();
+      range.category = chart2.data[chart2.data.length - 1].category;
+      range.label.disabled = true;
+      range.tick.location = 1;
+      range.grid.location = 1;
+    </script>
+
+    <style >
+      /* .w3-bar-item {
+    background-color: red;
+} */
+      /* .w3-teal {
+    background-color: red !important;
+} */
+.w3-row-padding {
+  padding: 0;
+}
+      .w3-padding-64 {
+        padding-bottom: 0 !important;
+      }
+
+      .foreword__inner {
+        margin: 3rem auto;
+        width: 60%;
+      }
+
+      .team__container--item {
+        min-height: 90vh;
+      }
+
+      .work--flexImage {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        justify-content: center;
+      }
+
+      .work--flexImage--item {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .work--image img {
+        object-fit: contain;
+        padding: 0.5rem;
+      }
+
+      .work--image .full {
+        width: 100%;
+      }
+
+      .work--image .sixtyFive {
+        width: 65%;
+      }
+      .work--image .fourty {
+        width: 40%;
+      }
+
+      @media screen and (max-width: 976px) {
+        .work--flexImage {
+          flex-direction: column;
+        }
+      }
+      @media screen and (max-width: 768px) {
+        .foreword__inner {
+          width: 90%;
+        }
+      }
+    </style>
+</body>
+
+</html>

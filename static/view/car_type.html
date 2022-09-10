@@ -1,0 +1,282 @@
+<html>
+
+<head>
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+  <title>預測結果 Body Type</title>
+  <link rel="icon" type="image/x-icon" href="static/img/car.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="content">
+        <div class="main">
+            <div class="title">
+                <h1>找出你的夢想二手車</h1>
+                <p>輸入數值找出想要的車款</p>
+            </div>
+            <div class="text">
+                <p>
+                    請輸入你理想的車子資料：
+                </p>
+            </div>
+            <div class="input">
+                <br>
+                <input id="height" type="number" name="height" min="0"  placeholder="輸入高度(英吋)" pattern="\*d" inputmode="numeric" onkeyup="if(value<0) value=0;">
+                <input id="length" type="number" name="length" min="0"  placeholder="輸入長度(英吋)" pattern="\*d" inputmode="numeric">
+
+                <input id="power" type="number" name="power" min="0"  placeholder="輸入馬力(HP)" pattern="\*d" inputmode="numeric">
+
+                <input id="width" type="number" name="width" min="0"  placeholder="輸入寬度(英吋)" pattern="\*d" inputmode="numeric">
+
+                <button class="clear" onclick="clearAll()">清空</button>
+                <button class="submit" onclick="getYourCar()">找出你的夢想車車</button>
+            </div>
+        </div>
+        <div class="result">
+            <span id="result"></span>
+            <div id="resultImage"></div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    $(function () {
+        $("input").keydown(function () {
+            // Save old value.
+            if (!$(this).val() || (parseInt($(this).val()) < 1000 && parseInt($(this).val()) >= 0))
+            $(this).data("old", $(this).val());
+        });
+        $("input").keyup(function () {
+            // Check correct, else revert back to old value.
+            if (!$(this).val() || (parseInt($(this).val()) < 1000 && parseInt($(this).val()) >= 0))
+            ;
+            else
+            $(this).val($(this).data("old"));
+        });
+    });
+    function clearAll() {
+        document.getElementById("height").value = ''
+        document.getElementById("length").value = ''
+        document.getElementById("power").value = ''
+        document.getElementById("width").value = ''
+        document.getElementById("result").innerHTML = ''
+        document.getElementById("resultImage").innerHTML = '';
+    }
+    function getYourCar() {
+        document.getElementById("result").innerHTML = ''
+        let height = +document.getElementById("height").value;
+        let length = +document.getElementById("length").value;
+        let power = +document.getElementById("power").value;
+        let width = +document.getElementById("width").value;
+        if (height == '' || length == '' || power == '' || width == '') {
+            alert('請輸入完整條件')
+            return
+        }
+        // if (height =='')
+        let C0 = 'Pickup Truck'
+        let C1 = 'SUV/Crossover'
+        let C2 = 'Sedan'
+        function produceMessage() {
+            if (height >= 60.05) {
+                if (length >= 202.4) {
+                    if (power >= 309) {
+                        return C1
+                    } else {
+                        return C0
+                    }
+                } else {
+                    return C1
+                }
+            } else {
+                return C2
+            }
+        }
+        document.getElementById("result").innerHTML = produceMessage();
+        document.getElementById('result').scrollIntoView({
+            behavior: 'smooth'
+        });
+        setImage(named(produceMessage()))
+    }
+    
+    function named(name) {
+        switch (name) {
+        case 'Pickup Truck':
+            return 'Pickup'
+            break;
+        case 'SUV/Crossover':
+            return 'Crossover'
+            break;
+        case 'Sedan':
+            return 'Sedan'
+            break;
+        
+            default:
+                break;
+        }
+    }
+    function setImage(type) {
+        document.getElementById("resultImage").innerHTML = '';
+        let img = new Image();
+        img.src = `../img/${type}.png`;
+        document.getElementById("resultImage").append(img);
+
+    }
+</script>
+
+<style>
+    html, body, div, span, applet, object, iframe,
+blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+   margin: 0;
+   padding: 0;
+   border: 0;
+   font-size: 100%;
+   font: inherit;
+   vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+   display: block;
+}
+body {
+   line-height: 1;
+}
+ol, ul {
+   list-style: none;
+}
+blockquote, q {
+   quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+   content: '';
+   content: none;
+}
+table {
+   border-collapse: collapse;
+   border-spacing: 0;
+}
+input, input:focus{
+   border-width: 0px;
+   outline:0;
+   -webkit-appearance:none;
+   box-shadow: none;
+   -moz-box-shadow: none;
+   -webkit-box-shadow: none;
+}
+
+h1,p {
+   color: beige;
+}
+p {
+   font-size: 14px;  
+}
+input {
+   padding:0.4rem 0.7rem;
+   margin: 0.3rem;
+   border-radius: 2px;
+   width: 15%;
+}
+button {
+   outline: 0;
+   border: none;
+   padding: 0.5rem 1.5rem;
+   border-radius: 3px;
+   font-weight: 600;
+   cursor: pointer;
+}
+button:last-child {
+   margin-left: 1rem;
+}
+button:hover {
+   box-shadow: 0.05rem 0.05rem 0.05rem 0.05rem rgba(88, 94, 78, 0.3) ;
+}
+.main {
+   height: 100%;
+   padding: 5% 12% 12% 12%;
+   background: rgb(2,0,36);
+   background: linear-gradient(130deg, rgba(2,0,36,1) 0%, rgba(95,224,251,1) 59%, rgba(61,93,170,1) 100%);
+   
+}
+
+.input {
+   margin-top: 2rem;
+   padding: 3%;
+   display: inline-flex;
+   flex-wrap: wrap;
+   align-items: center;
+   justify-content: center;
+   background-color: rgba(0, 0, 0, 0.3);
+   border-radius: 10px;
+   
+}
+.submit {
+   background-color: rgb(142, 239, 14);
+   color: white;
+}
+.clear {
+   background-color: rgb(88, 94, 78);
+   color: white;
+}
+.result {
+   height: 100%;
+   background: rgb(206, 173, 231);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+}
+#result {
+   font-size: 3rem;
+   color: white;
+   font-weight: bolder;
+   letter-spacing: 2px;
+}
+#resultImage {
+   margin-top: 1rem;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+#resultImage img{
+   width: 70%;
+   border-radius: 10px;
+}
+
+  
+@media screen and (max-width:976px) {
+   input {
+      width: 90%;
+   }
+   button {
+      margin-top: 1rem;
+   }
+   button:last-child {
+      margin-left: 0;
+      margin-top: 1rem;
+   }
+   .input {
+      flex-direction: column;
+   }
+   .main {
+      text-align: center;
+   }
+}
+  
+
+</style>
